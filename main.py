@@ -28,5 +28,31 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42
 )
 
-print("Train size:", len(X_train))
-print("Test size:", len(X_test))
+vectorizer = TfidfVectorizer(max_features=5000, ngram_range=(1,2))
+
+X_train_tfidf = vectorizer.fit_transform(X_train)
+X_test_tfidf = vectorizer.transform(X_test)
+
+bnb = BernoulliNB()
+bnb.fit(X_train_tfidf, y_train)
+
+bnb_pred = bnb.predict(X_test_tfidf)
+
+# print("Bernoulli Naive Bayes Accuracy:", accuracy_score(y_test, bnb_pred))
+# print("\nBernoulliNB Classification Report:\n", classification_report(y_test, bnb_pred))
+
+svm = LinearSVC(max_iter=1000)
+svm.fit(X_train_tfidf, y_train)
+
+svm_pred = svm.predict(X_test_tfidf)
+
+# print("SVM Accuracy:", accuracy_score(y_test, svm_pred))
+# print("\nSVM Classification Report:\n", classification_report(y_test, svm_pred))
+
+logreg = LogisticRegression(max_iter=100)
+logreg.fit(X_train_tfidf, y_train)
+
+logreg_pred = logreg.predict(X_test_tfidf)
+
+print("Logistic Regression Accuracy:", accuracy_score(y_test, logreg_pred))
+print("\nLogistic Regression Classification Report:\n", classification_report(y_test, logreg_pred))
