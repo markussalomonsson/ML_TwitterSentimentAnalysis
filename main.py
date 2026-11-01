@@ -6,7 +6,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVC
 from sklearn.metrics import accuracy_score, classification_report
 
-df = pd.read_csv('training.1600000.processed.noemoticon.csv.zip', encoding='latin-1', header=None)
+df = pd.read_csv('training.1600000.processed.noemoticon.csv', encoding='latin-1', header=None)
 df = df[[0, 5]]
 df.columns = ['polarity', 'text']
 print(df.head())
